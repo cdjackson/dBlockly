@@ -179,7 +179,7 @@ Blockly.Trashcan.prototype.init = function () {
     this.setOpen_(false);
     this.position_();
     // If the document resizes, reposition the trash can.
-//  Blockly.bindEvent_(window, 'resize', this, this.position_);
+  Blockly.bindEvent_(window, 'resize', this, this.position_);
 };
 
 /**
@@ -188,7 +188,7 @@ Blockly.Trashcan.prototype.init = function () {
  */
 Blockly.Trashcan.prototype.dispose = function () {
     if (this.svgGroup_) {
-        Ext.removeNode(this.svgGroup_);
+        domConstruct.destroy(this.svgGroup_);
         this.svgGroup_ = null;
     }
     this.svgBody_ = null;
@@ -280,8 +280,7 @@ Blockly.Trashcan.prototype.animateLid_ = function () {
         (Blockly.RTL ? 4 : this.WIDTH_ - 4) + ', ' +
         (this.LID_HEIGHT_ - 2) + ')');
     if (this.isOpen ? (this.lidAngle_ < 45) : (this.lidAngle_ > 0)) {
-        this.lidTask_ = new Ext.util.DelayedTask(this.animateLid_, this);
-        this.lidTask_.delay(5);
+        window.setTimeout(lang.hitch(this, this.animateLid_), 5);
     }
 };
 

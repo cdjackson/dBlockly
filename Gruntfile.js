@@ -16,7 +16,9 @@ module.exports = function (grunt) {
             core: {
                 expand: false,
                 flatten: true,
-                src: ['core/blockly.js', 'core/block.js', 'core/block_svg.js', 'core/blocks.js', 'core/icon.js',
+                src: [
+                    'dblockly/start.js',
+                    'core/blockly.js', 'core/block.js', 'core/block_svg.js', 'core/blocks.js', 'core/icon.js',
                     'core/bubble.js',
                     'core/comment.js', 'core/connection.js', 'core/contextmenu.js', 'core/css.js', 'core/field.js',
                     'core/field_textinput.js',
@@ -28,15 +30,18 @@ module.exports = function (grunt) {
                     'core/tooltip.js',
                     'core/trashcan.js', 'core/utils.js', 'core/variables.js', 'core/warning.js', 'core/widgetdiv.js',
                     'core/workspace.js',
-                    'core/json.js', 'core/xml.js'
+                    'core/json.js', 'core/xml.js',
+                    'blocks/*.js',
+                    "msg/js/en.js",
+                    'dblockly/end.js'
                 ],
-                dest: 'build/core.js'
+                dest: 'dist/core.js'
             },
             blocks: {
                 expand: false,
                 flatten: true,
                 src: ['blocks/*.js'],
-                dest: 'build/blocks.js'
+                dest: 'dist/blocks.js'
             }
         },
         copy: {
@@ -45,19 +50,19 @@ module.exports = function (grunt) {
                 expand: true,
                 flatten: true,
                 src: ['msg/js/*.js'],
-                dest: 'build/msg/'
+                dest: 'dist/msg/'
             },
             media: {
                 expand: true,
                 src: ['media/**'],
-                dest: 'build/'
+                dest: 'dist/'
             },
 
             blockly: {
                 expand: true,
                 flatten: true,
-                src: ['extjs/Blockly.js'],
-                dest: 'build/'
+                src: ['dblockly/Blockly.js'],
+                dest: 'dist/'
             }
         }
     });

@@ -48,7 +48,7 @@ Blockly.FieldImage = function (src, width, height, opt_alt) {
             'width': this.width_ + 'px',
             'y': offsetY}, this.fieldGroup_);
     this.setValue(src);
-    if (Ext.isGecko) {
+    if (has("ff")) { //Ext.isGecko) {
         // Due to a Firefox bug which eats mouse events on image elements,
         // a transparent rectangle needs to be placed on top of the image.
         this.rectElement_ = Blockly.createSvgElement('rect',
@@ -103,7 +103,7 @@ Blockly.FieldImage.prototype.init = function (block) {
  * Dispose of all DOM objects belonging to this text.
  */
 Blockly.FieldImage.prototype.dispose = function () {
-    Ext.removeNode(this.fieldGroup_);
+    domConstruct.destroy(this.fieldGroup_);
     this.fieldGroup_ = null;
     this.imageElement_ = null;
     this.rectElement_ = null;

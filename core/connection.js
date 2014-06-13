@@ -359,7 +359,7 @@ Blockly.Connection.prototype.highlight = function () {
  * Remove the highlighting around this connection.
  */
 Blockly.Connection.prototype.unhighlight = function () {
-    Ext.removeNode(Blockly.Connection.highlightedPath_);
+    domConstruct.destroy(Blockly.Connection.highlightedPath_);
     delete Blockly.Connection.highlightedPath_;
 };
 
@@ -527,7 +527,7 @@ Blockly.Connection.prototype.checkType_ = function (otherConnection) {
 Blockly.Connection.prototype.setCheck = function (check) {
     if (check) {
         // Ensure that check is in an array.
-        if (!Ext.isArray(check)) {
+        if (!(check instanceof Array)) {
             check = [check];
         }
         this.check_ = check;

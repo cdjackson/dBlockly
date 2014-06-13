@@ -105,7 +105,7 @@ Blockly.FieldTextInput.prototype.showEditor_ = function () {
      }*/
 
 
-    Blockly.FieldTextInput.htmlInput_ = Ext.create("Ext.form.field.Text", {
+    Blockly.FieldTextInput.htmlInput_ = domConstruct.create("Ext.form.field.Text", {
         block: this,
         border: false,
         cls: 'blocklyHtmlInput',
@@ -133,7 +133,7 @@ Blockly.FieldTextInput.prototype.showEditor_ = function () {
     return;
     var div = Blockly.DIV;
     // Create the input.
-    var htmlInput = Ext.DomHelper.createDom({tag: 'input', id: 'blocklyHtmlInput' });
+    var htmlInput = domConstruct.create('input', {id: 'blocklyHtmlInput' });
     Blockly.FieldTextInput.htmlInput_ = htmlInput;
     div.appendChild(htmlInput);
 
@@ -173,7 +173,7 @@ Blockly.FieldTextInput.prototype.onHtmlInputChange_ = function (e) {
             htmlInput.oldValue_ = text;
             this.setText(text);
             this.validate_();
-        } else if (Ext.isWebKit) {
+        } else if (has("webkit")) {
             // Cursor key.  Render the source block to show the caret moving.
             // Chrome only (version 26, OS X).
             this.sourceBlock_.render();
@@ -224,7 +224,7 @@ Blockly.FieldTextInput.prototype.resizeEditor_ = function () {
     // Shift by a few pixels to line up exactly.
     xy.x -= 1;
     xy.y += 1;
-    if (Ext.isWebKit) {
+    if (has("webkit")) {
         xy.y -= 3;
     }
 //    div.style.left = xy.x + 'px';

@@ -561,7 +561,7 @@ Blockly.Bubble.prototype.setColour = function (hexColour) {
 Blockly.Bubble.prototype.dispose = function () {
     Blockly.Bubble.unbindDragEvents_();
     // Dispose of and unlink the bubble.
-    Ext.removeNode(this.bubbleGroup_);
+    domConstruct.destroy(this.bubbleGroup_);
     this.bubbleGroup_ = null;
     this.workspace_ = null;
     this.content_ = null;

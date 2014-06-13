@@ -49,12 +49,12 @@ Blockly.HTML_NS = 'http://www.w3.org/1999/xhtml';
  * The richness of block colours, regardless of the hue.
  * Must be in the range of 0 (inclusive) to 1 (exclusive).
  */
-Blockly.HSV_SATURATION = 0.45;
+Blockly.HSV_SATURATION = 45;
 /**
  * The intensity of block colours, regardless of the hue.
  * Must be in the range of 0 (inclusive) to 1 (exclusive).
  */
-Blockly.HSV_VALUE = 0.65;
+Blockly.HSV_VALUE = 65;
 
 /**
  * Convert a hue (HSV model) into an RGB hex triplet.
@@ -62,7 +62,7 @@ Blockly.HSV_VALUE = 0.65;
  * @return {string} RGB code, e.g. '#5ba65b'.
  */
 Blockly.makeColour = function (hue) {
-    return Ext.draw.Color.fromHSL(hue, Blockly.HSV_SATURATION, Blockly.HSV_VALUE).toString();
+    return hsl.fromHsl(hue, Blockly.HSV_SATURATION, Blockly.HSV_VALUE);//.toString();
 };
 
 /**
@@ -511,14 +511,14 @@ Blockly.playAudio = function (name, opt_volume) {
     var sound = Blockly.SOUNDS_[name];
     if (sound) {
         var mySound;
-        if (Ext.is.Phone || Ext.is.Tablet) {
+/*        if (Ext.is.Phone || Ext.is.Tablet) {
             // Creating a new audio node causes lag in IE9, Android and iPad. Android
             // and IE9 refetch the file from the server, iPad uses a singleton audio
             // node which must be deleted and recreated for each new audio tag.
             mySound = sound;
-        } else {
+        } else {*/
             mySound = sound.cloneNode();
-        }
+//        }
         mySound.volume = (opt_volume === undefined ? 1 : opt_volume);
         mySound.play();
     }
@@ -617,11 +617,11 @@ Blockly.setMainWorkspaceMetrics_ = function (xyRatio) {
         throw 'Attempt to set main workspace scroll without scrollbars.';
     }
     var metrics = Blockly.getMainWorkspaceMetrics_();
-    if (Ext.isNumber(xyRatio.x)) {
+    if (!isNaN(xyRatio.x)) {
         Blockly.mainWorkspace.scrollX = -metrics.contentWidth * xyRatio.x -
             metrics.contentLeft;
     }
-    if (Ext.isNumber(xyRatio.y)) {
+    if (!isNaN(xyRatio.y)) {
         Blockly.mainWorkspace.scrollY = -metrics.contentHeight * xyRatio.y -
             metrics.contentTop;
     }
@@ -686,15 +686,6 @@ Blockly.inherits = function (childCtor, parentCtor) {
     childCtor.prototype = new tempCtor();
     childCtor.prototype.constructor = childCtor;
 };
-
-Blockly.mixin = function (destination, source) {
-    for (var k in source) {
-        if (source.hasOwnProperty(k)) {
-            destination[k] = source[k];
-        }
-    }
-    return destination;
-}
 
 Blockly.caseInsensitiveCompare = function (str1, str2) {
     var test1 = String(str1).toLowerCase();

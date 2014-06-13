@@ -1,0 +1,4 @@
+    declare(null, {});
+    return Blockly;
+
+});

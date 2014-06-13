@@ -33,7 +33,7 @@ Blockly.Xml = {};
  */
 Blockly.Xml.workspaceToDom = function (workspace) {
     var width = Blockly.svgSize().width;
-    var xml = Ext.DomHelper.createDom({tag: 'xml'});
+    var xml = domConstruct.create('xml');
     var blocks = workspace.getTopBlocks(true);
     for (var i = 0, block; block = blocks[i]; i++) {
         var element = Blockly.Xml.blockToDom_(block);
@@ -52,7 +52,7 @@ Blockly.Xml.workspaceToDom = function (workspace) {
  * @private
  */
 Blockly.Xml.blockToDom_ = function (block) {
-    var element = Ext.DomHelper.createDom({tag: 'block', type: block.type, id: block.id });
+    var element = domConstruct.create('block', {type: block.type, id: block.id });
     element.setAttribute('type', block.type);
     element.setAttribute('id', block.id);
     if (block.mutationToDom) {
@@ -64,7 +64,7 @@ Blockly.Xml.blockToDom_ = function (block) {
     }
     function fieldToDom(field) {
         if (field.name && field.EDITABLE) {
-            var container = Ext.DomHelper.createDom({tag: 'field', children: field.getValue()});
+            var container = domConstruct.create('field', {children: field.getValue()});
             container.setAttribute('name', field.name);
             element.appendChild(container);
         }
@@ -77,7 +77,7 @@ Blockly.Xml.blockToDom_ = function (block) {
     }
 
     if (block.comment) {
-        var commentElement = Ext.DomHelper.createDom({tag: 'comment', children: block.comment.getText()});
+        var commentElement = domConstruct.create('comment', {children: block.comment.getText()});
         commentElement.setAttribute('pinned', block.comment.isVisible());
         var hw = block.comment.getBubbleSize();
         commentElement.setAttribute('h', hw.height);
@@ -94,10 +94,10 @@ Blockly.Xml.blockToDom_ = function (block) {
         } else {
             var childBlock = input.connection.targetBlock();
             if (input.type == Blockly.INPUT_VALUE) {
-                container = Ext.DomHelper.createDom({tag: 'value'});
+                container = ('value');
                 hasValues = true;
             } else if (input.type == Blockly.NEXT_STATEMENT) {
-                container = Ext.DomHelper.createDom({tag: 'statement'});
+                container = domConstruct.create('statement');
             }
             if (childBlock) {
                 container.appendChild(Blockly.Xml.blockToDom_(childBlock));
@@ -131,7 +131,7 @@ Blockly.Xml.blockToDom_ = function (block) {
     if (block.nextConnection) {
         var nextBlock = block.nextConnection.targetBlock();
         if (nextBlock) {
-            var container = Ext.DomHelper.createDom({tag: 'next', children: Blockly.Xml.blockToDom_(nextBlock)});
+            var container = domConstruct.create('next', {children: Blockly.Xml.blockToDom_(nextBlock)});
             element.appendChild(container);
         }
     }

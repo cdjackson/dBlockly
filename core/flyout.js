@@ -136,7 +136,7 @@ Blockly.Flyout.prototype.dispose = function () {
     }
     this.workspace_ = null;
     if (this.svgGroup_) {
-        Ext.removeNode(this.svgGroup_);
+        domConstruct.destroy(this.svgGroup_);
         this.svgGroup_ = null;
     }
     this.svgBackground_ = null;
@@ -192,7 +192,7 @@ Blockly.Flyout.prototype.setMetrics_ = function (yRatio) {
     if (!metrics) {
         return;
     }
-    if (Ext.isNumber(yRatio.y)) {
+    if (lang.isNumeric(yRatio.y)) {
         this.workspace_.scrollY = -metrics.contentHeight * yRatio.y - metrics.contentTop;
     }
     var y = this.workspace_.scrollY + metrics.absoluteTop;
@@ -307,7 +307,7 @@ Blockly.Flyout.prototype.hide = function () {
     }
     // Delete all the background buttons.
     for (var x = 0, rect; rect = this.buttons_[x]; x++) {
-        Ext.removeNode(rect);
+        domConstruct.destroy(rect);
     }
     this.buttons_.splice(0);
 };

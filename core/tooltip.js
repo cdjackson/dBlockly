@@ -172,7 +172,7 @@ Blockly.Tooltip.onMouseOver_ = function (e) {
     // If the tooltip is an object, treat it as a pointer to the next object in
     // the chain to look at.  Terminate when a string or function is found.
     var element = e.target;
-    while (!Ext.isString(element.tooltip) && !Ext.isFunction(element.tooltip)) {
+    while (!(typeof element.tooltip  == "string") && !(typeof element.tooltip == "function")) {
         element = element.tooltip;
     }
     if (Blockly.Tooltip.element_ != element) {
@@ -266,7 +266,7 @@ Blockly.Tooltip.show_ = function () {
         /** @type {!Element} */ (Blockly.Tooltip.svgText_));
     // Get the new text.
     var tip = Blockly.Tooltip.element_.tooltip;
-    if (Ext.isFunction(tip)) {
+    if (typeof(tip) == "function") {
         tip = tip();
     }
     tip = Blockly.Tooltip.wrap_(tip, Blockly.Tooltip.LIMIT);

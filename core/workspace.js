@@ -24,7 +24,6 @@
  */
 'use strict';
 
-
 /**
  * Class for a workspace.
  * @param {Function} getMetrics A function that returns size/scrolling metrics.
@@ -120,7 +119,7 @@ Blockly.Workspace.prototype.createDom = function () {
  */
 Blockly.Workspace.prototype.dispose = function () {
     if (this.svgGroup_) {
-        Ext.removeNode(this.svgGroup_);
+        domConstruct.destroy(this.svgGroup_);
         this.svgGroup_ = null;
     }
     this.svgBlockCanvas_ = null;

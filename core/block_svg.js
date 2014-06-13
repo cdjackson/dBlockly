@@ -300,7 +300,7 @@ Blockly.BlockSvg.INNER_BOTTOM_LEFT_CORNER_HIGHLIGHT_LTR =
  * Dispose of this SVG block.
  */
 Blockly.BlockSvg.prototype.dispose = function () {
-    Ext.removeNode(this.svgGroup_);
+    domConstruct.destroy(this.svgGroup_);
     // Sever JavaScript to DOM connections.
     this.svgGroup_ = null;
     this.svgPath_ = null;
@@ -339,7 +339,7 @@ Blockly.BlockSvg.disposeUiStep_ = function (clone) {
     var ms = (new Date()) - clone.startDate_;
     var percent = ms / 150;
     if (percent > 1) {
-        Ext.removeNode(clone);
+        domConstruct.destroy(clone);
     } else {
         var x = clone.translateX_ +
             (Blockly.RTL ? -1 : 1) * clone.bBox_.width / 2 * percent;
@@ -389,7 +389,7 @@ Blockly.BlockSvg.connectionUiStep_ = function (ripple) {
     var ms = (new Date()) - ripple.startDate_;
     var percent = ms / 150;
     if (percent > 1) {
-        Ext.removeNode(ripple);
+        domConstruct.destroy(ripple);
     } else {
         ripple.setAttribute('r', percent * 25);
         ripple.style.opacity = 1 - percent;
@@ -408,13 +408,20 @@ Blockly.BlockSvg.prototype.updateColour = function () {
         // Disabled blocks don't have colour.
         return;
     }
-    var hexColour = Blockly.makeColour(this.block_.getColour());
-    var rgb = Ext.draw.Color.fromString(hexColour);
-    var rgbLight = rgb.getLighter(0.1);
-    var rgbDark = rgb.getDarker(0.1);
-    this.svgPathLight_.setAttribute('stroke', rgbLight.toString());
-    this.svgPathDark_.setAttribute('fill', rgbDark.toString());
-    this.svgPath_.setAttribute('fill', hexColour);
+    var rgb = Blockly.makeColour(this.block_.getColour());
+    var rgbLight = Blockly.makeColour(this.block_.getColour());
+    rgbLight.r = rgb.r - 20;
+    rgbLight.g = rgb.g - 20;
+    rgbLight.b = rgb.b - 20;
+    rgbLight.a = rgb.a;
+    var rgbDark = Blockly.makeColour(this.block_.getColour());
+    rgbDark.r = rgb.r + 20;
+    rgbDark.g = rgb.g + 20;
+    rgbDark.b = rgb.b + 20;
+    rgbDark.a = rgb.a;
+    this.svgPathLight_.setAttribute('stroke', rgbLight);
+    this.svgPathDark_.setAttribute('fill', rgbDark);
+    this.svgPath_.setAttribute('fill', rgb);
 };
 
 /**

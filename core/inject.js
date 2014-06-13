@@ -31,13 +31,13 @@
  */
 Blockly.inject = function (container, opt_options) {
     // Verify that the container is in document.
-    if (Ext.getDom(container) == null) {
+/*    if (dom.byId(container) == null) {
         throw 'Error: container is not in current document.';
-    }
+    }*/
     Blockly.DIV = container;
     if (opt_options) {
         // TODO(scr): don't mix this in to global variables.
-        Blockly.mixin(Blockly, Blockly.parseOptions_(opt_options));
+        lang.mixin(Blockly, Blockly.parseOptions_(opt_options));
     }
     var startUi = function () {
         Blockly.createDom_(container);
@@ -211,7 +211,7 @@ Blockly.createDom_ = function (container) {
         flyout.init(Blockly.mainWorkspace, true);
         flyout.autoClose = false;
         // Insert the flyout behind the workspace so that blocks appear on top.
-        Ext.DomHelper.insertBefore(Blockly.mainWorkspace.svgGroup_, flyoutSvg);
+        domConstruct.create(flyoutSvg, null, Blockly.mainWorkspace.svgGroup_, 'before');
 
         var workspaceChanged = function () {
             if (Blockly.Block.dragMode_ == 0) {
@@ -269,7 +269,7 @@ Blockly.createDom_ = function (container) {
     Blockly.svgResize();
 
     // Create an HTML container for popup overlays (e.g. editor widgets).
-//    Blockly.WidgetDiv.DIV = Ext.DomHelper.createDom({tag: 'div', id: 'blocklyWidgetDiv' });
+//    Blockly.WidgetDiv.DIV = domConstruct.create('div', {id: 'blocklyWidgetDiv' });
 
 //    Blockly.WidgetDiv.DIV.style.direction = Blockly.RTL ? 'rtl' : 'ltr';
 //    document.body.appendChild(Blockly.WidgetDiv.DIV);
@@ -303,11 +303,11 @@ Blockly.init_ = function () {
         // with non-Blockly elements.
         document.addEventListener('mouseup', Blockly.onMouseUp_, false);
         // Some iPad versions don't fire resize after portrait to landscape change.
-        if (Ext.is.Tablet) {
-            Blockly.bindEvent_(window, 'orientationchange', document, function () {
-                Blockly.fireUiEvent(window, 'resize');
-            });
-        }
+   //     if (Ext.is.Tablet) {
+   //         Blockly.bindEvent_(window, 'orientationchange', document, function () {
+   //             Blockly.fireUiEvent(window, 'resize');
+   //         });
+   //     }
         Blockly.documentEventsBound_ = true;
     }
 

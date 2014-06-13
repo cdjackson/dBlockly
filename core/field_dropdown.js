@@ -142,7 +142,7 @@ Blockly.FieldDropdown.prototype.trimOptions_ = function () {
     this.prefixField = null;
     this.suffixField = null;
     var options = this.menuGenerator_;
-    if (!Ext.isArray(options) || options.length < 2) {
+    if (!(options instanceof Array) || options.length < 2) {
         return;
     }
     var strings = options.map(function (t) {
@@ -182,7 +182,7 @@ Blockly.FieldDropdown.prototype.trimOptions_ = function () {
  * @private
  */
 Blockly.FieldDropdown.prototype.getOptions_ = function () {
-    if (Ext.isFunction(this.menuGenerator_)) {
+    if (typeof(this.menuGenerator_) == "function") {
         return this.menuGenerator_.call(this);
     }
     return /** @type {!Array.<!Array.<string>>} */ (this.menuGenerator_);

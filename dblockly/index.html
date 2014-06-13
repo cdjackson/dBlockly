@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Dojo Blockly Demo</title>
+
+    <script src="../dojo/dojo.js"></script>
+
+    <xml id="go" xmlns="http://www.w3.org/1999/xhtml"><block type="controls_repeat_ext" id="35" inline="true" x="83" y="-9"><value name="TIMES"><block type="math_number" id="36"><field name="NUM">10</field></block></value></block></xml>
+
+</head>
+<body>
+<script>
+
+    dojoConfig= {
+        has: {
+            "dojo-firebug": false
+        },
+        parseOnLoad: false,
+        async: true,
+        packages: [
+            {
+                name: "build",
+                location: '/blockly/build'
+            }
+        ]
+    };
+
+    require(["dist/Blockly", "dojo/domReady!"], function (Blockly) {
+        var blk = new Blockly({});
+        blk.placeAt(document.body);
+        blk.startup();
+    });
+</script>
+</body>
+</html>

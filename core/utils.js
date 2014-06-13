@@ -167,7 +167,7 @@ Blockly.fireUiEvent = function (node, eventName) {
     var fire = function () {
         Blockly.fireUiEventNow(node, eventName);
     }
-    setTimeout(fire, 0);
+    window.setTimeout(fire, 0);
 };
 
 /**

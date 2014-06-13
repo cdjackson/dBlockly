@@ -94,7 +94,7 @@ Blockly.Field.prototype.dispose = function () {
         this.mouseUpWrapper_ = null;
     }
     this.sourceBlock_ = null;
-    Ext.removeNode(this.fieldGroup_);
+    domConstruct.destroy(this.fieldGroup_);
     this.fieldGroup_ = null;
     this.textElement_ = null;
     this.borderRect_ = null;

@@ -88,7 +88,7 @@ Blockly.Block.prototype.initialize = function (workspace, prototypeName) {
     workspace.addTopBlock(this);
     this.fill(workspace, prototypeName);
     // Bind an onchange function, if it exists.
-    if (Ext.isFunction(this.onchange)) {
+    if (typeof(this.onchange) == "function") {
         Blockly.bindEvent_(workspace.getCanvas(), 'blocklyWorkspaceChange', this, this.onchange);
     }
 };
@@ -125,10 +125,10 @@ Blockly.Block.prototype.fill = function (workspace, prototypeName) {
         var prototype = Blockly.Blocks[prototypeName];
         if (typeof(prototype) !== "object")
             console.log('Error: "%s" is an unknown language block.', prototypeName);
-        Blockly.mixin(this, prototype);
+        lang.mixin(this, prototype);
     }
     // Call an initialization function, if it exists.
-    if (Ext.isFunction(this.init)) {
+    if (typeof(this.init) == "function") {
         this.init();
     }
 };
@@ -255,8 +255,7 @@ Blockly.Block.terminateDrag_ = function () {
             delete selected.draggedBubbles_;
             selected.setDragging_(false);
             selected.render();
-            var task = new Ext.util.DelayedTask(selected.bumpNeighbours_, selected);
-            task.delay(Blockly.BUMP_DELAY);
+            window.setTimeout(lang.hitch(selected, selected.bumpNeighbours_), Blockly.BUMP_DELAY);
 
             // Update the scrollbars (if they exist).
             if (Blockly.mainWorkspace.scrollbar) {
@@ -551,8 +550,9 @@ Blockly.Block.prototype.onMouseUp_ = function (e) {
             }
         } else if (this_.workspace.trashcan && this_.workspace.trashcan.isOpen) {
             var trashcan = this_.workspace.trashcan;
-            var task = new Ext.util.DelayedTask(trashcan.close, trashcan);
-            task.delay(100);
+            window.setTimeout(lang.hitch(trashcan, trashcan.close), 100);
+            console.log("var task = new Ext.util.DelayedTask(trashcan.close, trashcan);");
+            //task.delay(100);
 
             Blockly.selected.dispose(false, true);
             // Dropping a block on the trash can will usually cause the workspace to
@@ -572,7 +572,7 @@ Blockly.Block.prototype.onMouseUp_ = function (e) {
  * @private
  */
 Blockly.Block.prototype.showHelp_ = function () {
-    var url = Ext.isFunction(this.helpUrl) ? this.helpUrl() : this.helpUrl;
+    var url = (this.helpUrl) == "function" ? this.helpUrl() : this.helpUrl;
     if (url) {
         window.open(url);
     }
@@ -713,7 +713,7 @@ Blockly.Block.prototype.showContextMenu_ = function (e) {
     }
 
     // Option to get help.
-    var url = Ext.isFunction(this.helpUrl) ? this.helpUrl() : this.helpUrl;
+    var url = typeof(this.helpUrl) == "function" ? this.helpUrl() : this.helpUrl;
     var helpOption = {enabled: !!url};
     helpOption.text = Blockly.Msg.HELP;
     helpOption.callback = function () {
@@ -1450,11 +1450,11 @@ Blockly.Block.prototype.toString = function (opt_maxLength) {
             }
         }
     }
-    text = Ext.util.Format.trim(text.join(' ')) || '???';
+    text = string.trim(text.join(' ')) || '???';
     if (opt_maxLength) {
         // TODO: Improve truncation so that text from this block is given priority.
         // TODO: Handle FieldImage better.
-        text = Ext.util.Format.substr(text, 0, opt_maxLength);
+        text = text.substring(0, opt_maxLength);
     }
     return text;
 };
@@ -1531,7 +1531,7 @@ Blockly.Block.prototype.interpolateMsg = function (msg, var_args) {
         if (field instanceof Blockly.Field) {
             this.appendField(field);
         } else {
-            if (!Ext.isArray(field))
+            if (!(field instanceof Array))
                 console.log("Error in addFieldToInput")
             this.appendField(field[1], field[0]);
         }
@@ -1553,7 +1553,7 @@ Blockly.Block.prototype.interpolateMsg = function (msg, var_args) {
     var tokens = msg.split(this.interpolateMsg.SPLIT_REGEX_);
     var fields = [];
     for (var i = 0; i < tokens.length; i += 2) {
-        var text = Ext.util.Format.trim(tokens[i]);
+        var text = string.trim(tokens[i]);
         var input = undefined;
         if (text) {
             fields.push(new Blockly.FieldLabel(text));
@@ -1782,7 +1782,7 @@ Blockly.Block.prototype.getCommentText = function () {
  */
 Blockly.Block.prototype.setCommentText = function (text) {
     var changedState = false;
-    if (Ext.isString(text)) {
+    if (typeof text == "string") {
         if (!this.comment) {
             this.comment = new Blockly.Comment(this);
             changedState = true;
@@ -1812,7 +1812,7 @@ Blockly.Block.prototype.setWarningText = function (text) {
         text = null;
     }
     var changedState = false;
-    if (Ext.isString(text)) {
+    if (typeof text  == "string") {
         if (!this.warning) {
             this.warning = new Blockly.Warning(this);
             changedState = true;
