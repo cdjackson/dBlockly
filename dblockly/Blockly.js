@@ -6,29 +6,35 @@
 define([
         "dojo/_base/declare",
         "dojo/_base/lang",
+        "dojo/dom-geometry",
         "dijit/layout/BorderContainer",
         "dijit/layout/ContentPane",
         "dijit/layout/AccordionContainer",
         "dist/core"
     ],
-    function (declare, lang, Border, ContentPane, Accordion, Blockly) {
+    function (declare, lang, domGeometry, Border, ContentPane, Accordion, Blockly) {
         return declare(Border, {
             design: 'sidebar',
-//            isLayoutContainer: true,
             gutters: true,
-            liveSplitters:true,
-            style:"height:100%;width:100%;",
+            liveSplitters: true,
+            style: "height:100%;width:100%;",
             blockly: {
                 collapse: true,
                 trashcan: true,
-                path:"../"
+                path: "../"
             },
 
             postCreate: function () {
                 this.blocklyPane = new ContentPane({
-                    style: "height:100%;width:100%;padding:0px;border:1px solid;",
+                    style: "height:100%;width:100%;padding:0px;border:none;",
                     region: "center",
-                    splitter: true
+                    splitter: true,
+                    resize: function (size) {
+                        domGeometry.setContentSize(this.domNode, size);
+                        if (Blockly.svg != null) {
+                            Blockly.svgResize();
+                        }
+                    }
                 });
                 this.addChild(this.blocklyPane);
 
@@ -50,7 +56,7 @@ define([
                 acc.startup();
 
             },
-            startup: function() {
+            startup: function () {
                 this.inherited(arguments);
                 // Initialise Blockly
                 Blockly.inject(document.getElementById(this.blocklyPane.domNode.id), {
