@@ -469,7 +469,7 @@ Blockly.Block.prototype.onMouseDown_ = function (e) {
         return;
     }
     // Update Blockly's knowledge of its own location.
-    //Blockly.svgResize();
+    Blockly.svgResize();
     // Update the scrollbars (if they exist).
     if (Blockly.mainWorkspace.scrollbar) {
         Blockly.mainWorkspace.scrollbar.resize();

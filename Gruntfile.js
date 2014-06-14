@@ -17,7 +17,7 @@ module.exports = function (grunt) {
                 expand: false,
                 flatten: true,
                 src: [
-                    'dblockly/start.js',
+                    'dojoblockly/start.js',
                     'core/blockly.js', 'core/block.js', 'core/block_svg.js', 'core/blocks.js', 'core/icon.js',
                     'core/bubble.js',
                     'core/comment.js', 'core/connection.js', 'core/contextmenu.js', 'core/css.js', 'core/field.js',
@@ -33,15 +33,9 @@ module.exports = function (grunt) {
                     'core/json.js', 'core/xml.js',
                     'blocks/*.js',
                     "msg/js/en.js",
-                    'dblockly/end.js'
+                    'dojoblockly/end.js'
                 ],
-                dest: 'dist/core.js'
-            },
-            blocks: {
-                expand: false,
-                flatten: true,
-                src: ['blocks/*.js'],
-                dest: 'dist/blocks.js'
+                dest: 'dblockly/BlocklyLib.js'
             }
         },
         copy: {
@@ -50,19 +44,19 @@ module.exports = function (grunt) {
                 expand: true,
                 flatten: true,
                 src: ['msg/js/*.js'],
-                dest: 'dist/msg/'
+                dest: 'dblockly/msg/'
             },
             media: {
                 expand: true,
                 src: ['media/**'],
-                dest: 'dist/'
+                dest: 'dblockly/'
             },
 
             blockly: {
                 expand: true,
                 flatten: true,
-                src: ['dblockly/Blockly.js'],
-                dest: 'dist/'
+                src: ['dojoblockly/Blockly.js'],
+                dest: 'dblockly/'
             }
         }
     });

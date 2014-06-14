@@ -296,7 +296,7 @@ Blockly.init_ = function () {
     if (!Blockly.documentEventsBound_) {
         // Only bind the window/document events once.
         // Destroying and reinjecting Blockly should not bind again.
-//    Blockly.bindEvent_(window, 'resize', document, Blockly.svgResize);
+        Blockly.bindEvent_(window, 'resize', document, Blockly.svgResize);
         Blockly.bindEvent_(document, 'keydown', null, Blockly.onKeyDown_);
         // Don't use bindEvent_ for document's mouseup isce that would create a
         // corresponding touch handler that would squeltch the ability to interact
